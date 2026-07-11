@@ -349,6 +349,8 @@ const NAV = [
 export function Navbar({ overlay = false }) {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const headerRef = useRef(null)
+  const [menuOffset, setMenuOffset] = useState(96)
   useEffect(() => {
     // When overlaying a full-height hero, stay transparent for the whole hero
     // section — only go solid once the user has scrolled past it.
@@ -374,7 +376,7 @@ export function Navbar({ overlay = false }) {
           Plumbing emergency? We answer 24/7 —{' '}
           <a href={`tel:${BIZ.phoneTel}`} className="font-bold underline underline-offset-2">{BIZ.phoneDisplay}</a>
         </div>
-        <header className={`${overlay ? '' : 'sticky top-0'} z-50 transition-all duration-300 ${scrolled ? 'glass shadow-lg shadow-primary/5' : 'bg-transparent'}`}>
+        <header ref={headerRef} className={`${overlay ? '' : 'sticky top-0'} z-50 transition-all duration-300 ${scrolled ? 'glass shadow-lg shadow-primary/5' : 'bg-transparent'}`}>
           <nav className="max-w-7xl mx-auto flex items-center justify-between gap-4 px-4 sm:px-8 py-3">
             <Logo dark={transparent} />
             <ul className="hidden lg:flex items-center gap-1">
@@ -407,7 +409,10 @@ export function Navbar({ overlay = false }) {
                 <Phone className="h-4 w-4" /> {BIZ.phoneDisplay}
               </a>
               <button
-                onClick={() => setOpen(!open)}
+                onClick={() => {
+                  if (!open) setMenuOffset((headerRef.current?.getBoundingClientRect().bottom ?? 80) + 16)
+                  setOpen(!open)
+                }}
                 className={`lg:hidden grid place-items-center h-11 w-11 rounded-full border transition-colors ${transparent ? 'border-white/20 bg-white/10 text-white' : 'border-divider bg-surface text-ink'}`}
                 aria-label={open ? 'Close menu' : 'Open menu'}
               >
@@ -420,7 +425,10 @@ export function Navbar({ overlay = false }) {
       {/* Mobile overlay */}
       <div className={`fixed inset-0 z-40 lg:hidden transition-all duration-300 ${open ? 'visible opacity-100' : 'invisible opacity-0'}`}>
         <div className="absolute inset-0 bg-deep/60 backdrop-blur-sm" onClick={() => setOpen(false)} />
-        <div className={`absolute right-0 top-0 h-full w-[85%] max-w-sm bg-surface shadow-2xl p-6 pt-24 flex flex-col transition-transform duration-300 ${open ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div
+          style={{ paddingTop: menuOffset }}
+          className={`absolute right-0 top-0 h-full w-[85%] max-w-sm bg-surface shadow-2xl p-6 flex flex-col transition-transform duration-300 ${open ? 'translate-x-0' : 'translate-x-full'}`}
+        >
           <ul className="space-y-1">
             {NAV.map((n) => (
               <li key={n.to}>
