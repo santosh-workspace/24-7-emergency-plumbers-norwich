@@ -1,17 +1,17 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
   Phone, ArrowUpRight, ArrowRight, ShieldCheck, BadgeCheck, Clock, Star,
   Siren, Droplets, AlertTriangle, Bath, Wrench, ShowerHead, CircleSlash2,
-  Flame, Settings, MapPin, PoundSterling, HeartHandshake, Award,
+  Flame, Settings, MapPin, PoundSterling, HeartHandshake, Award, CheckCircle2,
 } from 'lucide-react'
-import { BIZ, SERVICES, AREAS, REVIEWS, FAQS, GALLERY } from './data.js'
+import { BIZ, SERVICES, AREAS, REVIEWS, FAQS, TRUST_BADGES } from './data.js'
 import {
   Navbar, Footer, StickyCtaBar, QuoteForm, TrustStrip, FinalCta, Reveal, openQuote,
-  CountUp, WaterDrops, Stars, FaqList, CoverageMap, useSeo, LOCAL_BUSINESS_SCHEMA,
-  faqSchema, REVIEW_SCHEMA,
+  CountUp, WaterDrops, Stars, FaqList, CoverageMap, GoogleLogo, ReviewCard, useSeo,
+  LOCAL_BUSINESS_SCHEMA, faqSchema, REVIEW_SCHEMA,
 } from './shared.jsx'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -275,89 +275,55 @@ function AreasSection() {
   )
 }
 
-/* ================= BEFORE / AFTER GALLERY PREVIEW ================= */
-function BeforeAfterCard({ item }) {
-  const [pos, setPos] = useState(50)
-  return (
-    <div className="bg-surface rounded-4xl border border-divider overflow-hidden shadow-sm lift-on-hover">
-      <div className="relative aspect-[4/3] select-none overflow-hidden">
-        <img src={item.after} alt={`${item.title} — after`} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute inset-0 overflow-hidden" style={{ width: `${pos}%` }}>
-          <img src={item.before} alt={`${item.title} — before`} loading="lazy" className="absolute inset-0 h-full w-full object-cover" style={{ width: `${10000 / pos}%`, maxWidth: 'none' }} />
-        </div>
-        <div className="absolute inset-y-0" style={{ left: `${pos}%` }}>
-          <div className="absolute inset-y-0 -ml-px w-0.5 bg-white shadow" />
-          <span className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 grid place-items-center h-9 w-9 rounded-full bg-white shadow-lg text-primary text-xs font-bold">⇔</span>
-        </div>
-        <input
-          type="range" min="5" max="95" value={pos} onChange={(e) => setPos(+e.target.value)}
-          className="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize"
-          aria-label={`Compare before and after: ${item.title}`}
-        />
-        <span className="absolute top-3 left-3 rounded-full bg-deep/70 backdrop-blur px-3 py-1 text-[11px] font-bold text-white">BEFORE</span>
-        <span className="absolute top-3 right-3 rounded-full bg-accent px-3 py-1 text-[11px] font-bold text-white">AFTER</span>
-      </div>
-      <div className="p-5">
-        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary">{item.tag} · {item.place}</span>
-        <h3 className="font-display font-bold mt-1">{item.title}</h3>
-      </div>
-    </div>
-  )
-}
-
-function GalleryPreview() {
-  return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-8 py-20 sm:py-28">
-      <Reveal>
-        <div className="flex flex-wrap items-end justify-between gap-4 mb-12">
-          <div>
-            <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-primary mb-3">Proof, not promises</p>
-            <h2 className="font-display font-extrabold text-3xl sm:text-5xl tracking-tight text-balance">
-              Before &amp; after — <span className="font-serif italic font-medium gradient-text">drag to see.</span>
-            </h2>
-          </div>
-          <Link to="/gallery" className="lift-on-hover inline-flex items-center gap-2 font-semibold text-primary">
-            Full gallery <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-      </Reveal>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {GALLERY.slice(0, 3).map((g, i) => (
-          <Reveal key={g.title} delay={i * 120}><BeforeAfterCard item={g} /></Reveal>
-        ))}
-      </div>
-    </section>
-  )
-}
-
 /* ================= REVIEWS ================= */
 function ReviewsSection() {
   return (
-    <section className="bg-primary-dark text-white relative overflow-hidden">
-      <div className="absolute inset-0 grid-bg opacity-20" />
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-8 py-20 sm:py-28">
+    <section className="bg-surface border-y border-divider">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-20 sm:py-28">
         <Reveal>
           <div className="text-center mb-12">
-            <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-white/50 mb-3">Customer reviews</p>
-            <h2 className="font-display font-extrabold text-3xl sm:text-5xl tracking-tight">
-              Rated {BIZ.rating} from {BIZ.reviewCount} reviews<span className="font-serif italic font-medium text-white/80"> on Google.</span>
+            <Link to="/reviews" className="font-semibold text-primary hover:underline">Read Our Reviews</Link>
+            <h2 className="font-display font-extrabold text-3xl sm:text-5xl tracking-tight mt-2">
+              Trusted Plumbing Service in <span className="font-serif italic font-medium gradient-text">Norwich.</span>
             </h2>
           </div>
         </Reveal>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {REVIEWS.slice(0, 3).map((r, i) => (
-            <Reveal key={r.name} delay={i * 120}>
-              <figure className="glass-dark border border-white/10 rounded-4xl p-7 h-full flex flex-col">
-                <Stars n={r.stars} />
-                <blockquote className="mt-4 text-white/85 text-[15px] leading-relaxed flex-1">"{r.text}"</blockquote>
-                <figcaption className="mt-5 text-sm font-semibold">{r.name} <span className="text-white/50 font-normal">· {r.area}</span></figcaption>
-              </figure>
-            </Reveal>
-          ))}
+        <div className="grid lg:grid-cols-[200px_1fr] gap-8 lg:gap-10 items-start">
+          <Reveal>
+            <div className="text-center lg:text-left">
+              <p className="font-display font-extrabold text-2xl tracking-tight">EXCELLENT</p>
+              <Stars n={5} className="h-6 w-6 my-2" />
+              <p className="text-muted text-sm">Based on <strong className="text-ink">{BIZ.reviewCount} reviews</strong></p>
+              <div className="mt-2 flex justify-center lg:justify-start">
+                <GoogleLogo className="h-6 w-auto" />
+              </div>
+            </div>
+          </Reveal>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {REVIEWS.slice(0, 3).map((r, i) => (
+              <Reveal key={r.name} delay={i * 120} className="h-full">
+                <ReviewCard review={r} index={i} />
+              </Reveal>
+            ))}
+          </div>
         </div>
+        <Reveal delay={150}>
+          <div className="mt-8 flex justify-center">
+            <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-3 py-1.5">
+              <CheckCircle2 className="h-3.5 w-3.5" /> Verified by Trustindex
+            </span>
+          </div>
+        </Reveal>
         <Reveal delay={200}>
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
+            {TRUST_BADGES.map((b) => (
+              <img key={b.alt} src={b.src} alt={b.alt} className="h-14 w-auto object-contain" loading="lazy" />
+            ))}
+          </div>
+        </Reveal>
+        <Reveal delay={250}>
           <div className="text-center mt-10">
-            <Link to="/reviews" className="magnetic-btn inline-flex items-center gap-2 bg-white text-primary-dark px-7 py-3.5 rounded-full font-bold">
+            <Link to="/reviews" className="magnetic-btn inline-flex items-center gap-2 bg-primary text-white px-7 py-3.5 rounded-full font-bold">
               Read all reviews <ArrowUpRight className="h-4 w-4" />
             </Link>
           </div>
@@ -411,7 +377,6 @@ export default function App() {
         <Pillars />
         <WhyChooseUs />
         <AreasSection />
-        <GalleryPreview />
         <ReviewsSection />
         <FaqSection />
         {/* Mobile-only quote form (hero form hidden on small screens) */}

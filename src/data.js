@@ -1,6 +1,3 @@
-// Web3Forms access key — get one free at https://web3forms.com (tied to santosh10392@gmail.com)
-export const WEB3FORMS_ACCESS_KEY = 'YOUR_WEB3FORMS_ACCESS_KEY'
-
 // ------- Business constants (single source of truth for NAP) -------
 export const BIZ = {
   name: '247 Emergency Plumber Norwich',
@@ -183,14 +180,26 @@ export const AREA_COORDS = [
   { name: 'Reepham', lat: 52.7625, lng: 1.1178 },
 ]
 
-// ------- Reviews (representative of the 4.9-star Google profile) -------
+// ------- Reviews (real Google reviews, sourced from the business's Google profile) -------
 export const REVIEWS = [
-  { name: 'Sarah M.', area: 'Norwich NR3', stars: 5, text: 'Burst pipe at 11pm and they were here within 40 minutes. Calm, professional and the price was exactly what they quoted on the phone. Cannot recommend enough.' },
-  { name: 'David T.', area: 'Wymondham', stars: 5, text: 'Found a hidden leak under our kitchen floor that two other firms missed. Thermal camera located it in minutes and the repair was spotless.' },
-  { name: 'Emma R.', area: 'Hellesdon', stars: 5, text: 'Full bathroom refit — finished on schedule, beautiful finish, and they left the house cleaner than they found it. Worth every penny.' },
-  { name: 'James W.', area: 'Thorpe St Andrew', stars: 5, text: 'No hot water on a Sunday morning with guests staying. Fixed by lunchtime. No call-out fee, no drama. This is how a trade should operate.' },
-  { name: 'Linda H.', area: 'Great Yarmouth', stars: 5, text: 'Blocked drain cleared same day. The engineer explained the cause, fixed it, and gave honest advice to stop it recurring. Transparent pricing throughout.' },
-  { name: 'Peter G.', area: 'Cringleford', stars: 4, text: 'Radiator replacement done neatly and system balanced afterwards. Arrived slightly later than planned but kept me informed the whole time.' },
+  { name: 'James Edwards', stars: 5, timeAgo: '1 year ago', text: 'Was able to come out quickly and fixed the pipe I had managed to bend. Was incredibly helpful in guiding me on what I could do before arrival to keep costs to a minimum. Then got the job sorted in great time. Very friendly and would happily recommend.' },
+  { name: 'Diane Burt', stars: 5, timeAgo: '1 year ago', text: 'A very quick and efficient service at a very reasonable price. Would definitely use again' },
+  { name: 'Serena Jones', stars: 5, timeAgo: '1 year ago', text: 'Excellent work by Jason. Came the following day. Easy to contact and communicate with. Difficult job that involved moving a huge, very wobbly wardrobe. Then pulling up carpet + underlay, then sawing through a laminated floor, then through the chipboard floor and finding leak/damp area. Then had to put it all back, (fixing wardrobe too!) and fix toilet which was leaking! Came back following day to finish and fit new part. Couldn’t believe he got it all done in the time he did. Was sooo grateful! Reasonable price too. Thanks so much!!' },
+  { name: 'Colene Collins-Pereira', stars: 5, timeAgo: '10 months ago', text: "As plumbing emergencies would have it, my shower broke late on Sunday night. I'm very grateful to Jason for taking my call at that time. Very professional, easy to communicate with, and sorted the problem in no time. First helping over the phone via WhatsApp to switch off the water for the night, then came early the next day to fix the shower. Brilliant - like it never even happened. Thank you, Jason!" },
+  { name: 'Philip Betts', stars: 5, timeAgo: '11 months ago', text: 'After significant leak in our kitchen late last night leaving significant amount of water on the floor, I had a reassuring and clear chat to establish facts around next steps. Isolating water overnight, today we had new pipes installed and full check carried out. Fantastic service.' },
+  { name: 'Gerry Virgo', stars: 5, timeAgo: '11 months ago', text: 'Exceptional service: I called late evening in a panic when a hot water leak began to flood the kitchen and into the hall. Jason was calm on the phone and talked me through isolating and diagnosing the source of the leak - with phone photos. He made sure I had access to cold water until he arrived at 9.00 the following morning. He was professional and effective throughout and has left a repair, new tap plus a much neater array of copper pipework. I am profoundly grateful for his help at a time when I felt overwhelmed by the situation. Many thanks, Gerry' },
+  { name: 'kat maloo', stars: 5, timeAgo: '11 months ago', text: 'What can I say? A day of plumbing disaster resolved quickly, politely and genuinely by Jason. He gave a time and arrived bang on. Observed the problem and addressed it. Furthermore Jason signposted my boiler trouble to another plumber so two problems fixed in one day. As a single female with disabilities who knows nothing about plumbing I certainly recommend Jason. Kind and courteous - I felt safe. Excellent!' },
+  { name: 'Edwin Wadhams', stars: 5, timeAgo: '1 year ago', text: 'A first class service, job well done, reasonable prices. Strongly recommended' },
+  { name: 'Alex Yates', stars: 5, timeAgo: '1 year ago', text: 'Got some excellent advice over the phone after a prior plumber made an error installing our kitchen waste. Excellent service and a really nice guy, particularly as it was a bank holiday. Thank you.' },
+]
+
+// ------- Trust badges (real certifications/awards, hosted locally in /public/badges) -------
+export const TRUST_BADGES = [
+  { src: '/badges/top-plumber-award.png', alt: 'Top 3 Plumbers in Norwich Award' },
+  { src: '/badges/dbs-checked.png', alt: 'DBS Checked' },
+  { src: '/badges/fully-insured.png', alt: 'Fully Insured' },
+  { src: '/badges/yell.png', alt: 'Find us on Yell.com' },
+  { src: '/badges/city-guilds.png', alt: 'City & Guilds Qualified' },
 ]
 
 // ------- FAQs (site-wide) -------

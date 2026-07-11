@@ -1,6 +1,6 @@
 import { Phone, Mail, MapPin, Clock, MessageCircle, Siren } from 'lucide-react'
 import { BIZ } from '../data.js'
-import { PageShell, PageHero, Reveal, QuoteForm, useSeo, LOCAL_BUSINESS_SCHEMA } from '../shared.jsx'
+import { PageShell, PageHero, Reveal, QuoteForm, SocialLinks, useSeo, LOCAL_BUSINESS_SCHEMA } from '../shared.jsx'
 
 export default function Contact() {
   useSeo({
@@ -50,6 +50,15 @@ export default function Contact() {
                 </Reveal>
               ))}
             </div>
+            <Reveal delay={100}>
+              <div className="mb-8 flex items-center justify-between gap-4 bg-surface border border-divider rounded-3xl p-5">
+                <div>
+                  <h3 className="font-display font-bold text-[15px]">Follow us</h3>
+                  <p className="text-muted text-[12px] mt-1">Tips, jobs and offers on social media</p>
+                </div>
+                <SocialLinks dark={false} />
+              </div>
+            </Reveal>
             <Reveal delay={120}>
               <div className="bg-surface border border-divider rounded-4xl overflow-hidden">
                 <iframe

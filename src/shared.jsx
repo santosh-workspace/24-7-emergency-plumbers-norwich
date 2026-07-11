@@ -2,14 +2,14 @@ import { useEffect, useId, useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import {
   Phone, MessageCircle, Menu, X, Star, ShieldCheck, Clock, BadgeCheck,
-  MapPin, Mail, ArrowUpRight, CheckCircle2,
+  MapPin, Mail, ArrowUpRight, CheckCircle2, Camera, Loader2,
 } from 'lucide-react'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png'
 import markerIcon from 'leaflet/dist/images/marker-icon.png'
 import markerShadow from 'leaflet/dist/images/marker-shadow.png'
-import { BIZ, SERVICES, FAQS, REVIEWS, AREA_COORDS, WEB3FORMS_ACCESS_KEY } from './data.js'
+import { BIZ, SERVICES, FAQS, REVIEWS, AREA_COORDS } from './data.js'
 
 L.Marker.prototype.options.icon = L.icon({
   iconUrl: markerIcon, iconRetinaUrl: markerIcon2x, shadowUrl: markerShadow,
@@ -202,6 +202,104 @@ export function Stars({ n = 5, className = 'h-4 w-4' }) {
         <Star key={i} className={`${className} ${i < n ? 'fill-amber-400 text-amber-400' : 'text-divider fill-divider'}`} />
       ))}
     </span>
+  )
+}
+
+/* ---------------- Google 'G' logo ---------------- */
+export function GoogleLogo({ className = 'h-5 w-5' }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      <path fill="#4285F4" d="M22.6 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h5.9a5 5 0 0 1-2.2 3.3v2.8h3.6c2.1-2 3.3-4.9 3.3-8.3z" />
+      <path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.6-2.8c-1 .7-2.3 1.1-3.7 1.1-2.9 0-5.3-1.9-6.2-4.6H2.1v2.9A11 11 0 0 0 12 23z" />
+      <path fill="#FBBC05" d="M5.8 14a6.6 6.6 0 0 1 0-4.2V6.9H2.1a11 11 0 0 0 0 10z" />
+      <path fill="#EA4335" d="M12 5.4c1.6 0 3.1.6 4.2 1.7L19.4 4A11 11 0 0 0 2.1 6.9L5.8 9.8c.9-2.7 3.3-4.4 6.2-4.4z" />
+    </svg>
+  )
+}
+
+/* ---------------- Social brand glyphs ---------------- */
+export function FacebookIcon({ className = 'h-4 w-4' }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden="true">
+      <path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a7.664 7.664 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.239.386-.334.923-.334 1.673v1.376h3.826l-.622 3.667h-3.204v7.98H9.101z" />
+    </svg>
+  )
+}
+export function InstagramIcon({ className = 'h-4 w-4' }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden="true">
+      <path d="M12 0C8.74 0 8.333.014 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.014 8.333 0 8.74 0 12s.014 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.014 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.014-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.014 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.645-1.44-1.44 0-.795.645-1.439 1.44-1.439.795-.001 1.44.644 1.44 1.439z" />
+    </svg>
+  )
+}
+export function XIcon({ className = 'h-4 w-4' }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden="true">
+      <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
+    </svg>
+  )
+}
+
+/* ---------------- Social links row (Facebook / Instagram / X) ---------------- */
+export function SocialLinks({ className = '', iconClassName = 'h-4 w-4', dark = true }) {
+  const links = [
+    { href: BIZ.facebook, label: 'Facebook', Icon: FacebookIcon },
+    { href: BIZ.instagram, label: 'Instagram', Icon: InstagramIcon },
+    { href: BIZ.twitter, label: 'X (Twitter)', Icon: XIcon },
+  ]
+  const linkClass = dark
+    ? 'bg-white/10 text-white hover:bg-accent hover:text-white'
+    : 'bg-primary/10 text-primary hover:bg-accent hover:text-white'
+  return (
+    <div className={`flex items-center gap-2.5 ${className}`}>
+      {links.map(({ href, label, Icon }) => (
+        <a
+          key={label}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${BIZ.name} on ${label}`}
+          className={`grid place-items-center h-9 w-9 rounded-full transition-colors ${linkClass}`}
+        >
+          <Icon className={iconClassName} />
+        </a>
+      ))}
+    </div>
+  )
+}
+
+const AVATAR_COLORS = ['bg-emerald-600', 'bg-accent', 'bg-violet-600', 'bg-sky-600', 'bg-amber-600', 'bg-rose-600']
+
+/* ---------------- Review card (real Google review, with read-more) ---------------- */
+export function ReviewCard({ review, index = 0, className = '' }) {
+  const [expanded, setExpanded] = useState(false)
+  const long = review.text.length > 180
+  const color = AVATAR_COLORS[index % AVATAR_COLORS.length]
+  return (
+    <figure className={`bg-surface border border-divider rounded-3xl p-6 h-full flex flex-col ${className}`}>
+      <div className="flex items-center gap-3">
+        <span className={`shrink-0 grid place-items-center h-10 w-10 rounded-full text-white font-bold ${color}`}>
+          {review.name.charAt(0).toUpperCase()}
+        </span>
+        <div className="min-w-0 flex-1">
+          <figcaption className="font-semibold text-sm truncate">{review.name}</figcaption>
+          <p className="text-muted text-xs">{review.timeAgo}</p>
+        </div>
+        <GoogleLogo className="h-5 w-5 shrink-0" />
+      </div>
+      <div className="mt-3 flex items-center gap-1.5">
+        <Stars n={review.stars} className="h-4 w-4" />
+        <CheckCircle2 className="h-3.5 w-3.5 text-primary" aria-label="Verified review" />
+      </div>
+      <blockquote className={`mt-3 text-[14px] leading-relaxed text-ink/85 flex-1 ${expanded ? '' : 'line-clamp-4'}`}>
+        {review.text}
+      </blockquote>
+      {long && (
+        <button onClick={() => setExpanded(!expanded)} className="mt-2 text-left text-sm font-semibold text-primary self-start">
+          {expanded ? 'Show less' : 'Read more'}
+        </button>
+      )}
+    </figure>
   )
 }
 
@@ -434,17 +532,42 @@ export function TrustStrip({ dark = false }) {
 }
 
 /* ---------------- Quote form (reused hero + contact + CTA) ---------------- */
+// Resizes + re-encodes an image client-side so uploads stay small before they're emailed as an attachment.
+async function compressImage(file, maxDimension = 1600, quality = 0.72) {
+  const bitmap = await createImageBitmap(file)
+  const scale = Math.min(1, maxDimension / Math.max(bitmap.width, bitmap.height))
+  const canvas = document.createElement('canvas')
+  canvas.width = Math.round(bitmap.width * scale)
+  canvas.height = Math.round(bitmap.height * scale)
+  canvas.getContext('2d').drawImage(bitmap, 0, 0, canvas.width, canvas.height)
+  const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', quality))
+  const jpegName = file.name.replace(/\.\w+$/, '') + '.jpg'
+  return new File([blob], jpegName, { type: 'image/jpeg' })
+}
+
 export function QuoteForm({ compact = false, title = 'Request a free callback' }) {
   const [status, setStatus] = useState('idle')
+  const [photo, setPhoto] = useState(null)
+  const [photoBusy, setPhotoBusy] = useState(false)
+  const onPhotoChange = async (e) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setPhotoBusy(true)
+    try {
+      setPhoto(await compressImage(file))
+    } catch {
+      setPhoto(file)
+    } finally {
+      setPhotoBusy(false)
+    }
+  }
   const onSubmit = async (e) => {
     e.preventDefault()
     setStatus('sending')
     const formData = new FormData(e.target)
-    formData.append('access_key', WEB3FORMS_ACCESS_KEY)
-    formData.append('subject', `New quote request from ${BIZ.name} website`)
-    formData.append('from_name', BIZ.name)
+    if (photo) formData.append('attachment', photo, photo.name)
     try {
-      const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData })
+      const res = await fetch('/api/quote', { method: 'POST', body: formData })
       const data = await res.json()
       if (!data.success) throw new Error(data.message || 'Submission failed')
       window.gtag && window.gtag('event', 'quote_form_submit', { event_category: 'lead' })
@@ -482,7 +605,21 @@ export function QuoteForm({ compact = false, title = 'Request a free callback' }
         {!compact && (
           <textarea name="message" rows="3" placeholder="Briefly describe the problem (optional)" className="w-full rounded-2xl border border-divider bg-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40" />
         )}
-        <button type="submit" disabled={status === 'sending'} className="magnetic-btn w-full bg-accent text-white rounded-full py-3.5 font-bold shadow-lg shadow-accent/25 disabled:opacity-70">
+        <label className="flex items-center gap-3 w-full rounded-2xl border border-divider bg-background px-4 py-3 text-sm cursor-pointer hover:bg-divider/30 transition-colors">
+          {photoBusy ? (
+            <Loader2 className="h-4 w-4 shrink-0 text-primary animate-spin" />
+          ) : (
+            <Camera className="h-4 w-4 shrink-0 text-muted" />
+          )}
+          <span className={`flex-1 truncate ${photo ? 'text-ink' : 'text-muted'}`}>
+            {photoBusy ? 'Compressing photo…' : photo ? photo.name : 'Attach a photo of the problem (optional)'}
+          </span>
+          {photo && !photoBusy && (
+            <span className="text-[11px] font-semibold text-emerald-600 shrink-0">{Math.max(1, Math.round(photo.size / 1024))} KB</span>
+          )}
+          <input type="file" accept="image/*" className="hidden" onChange={onPhotoChange} />
+        </label>
+        <button type="submit" disabled={status === 'sending' || photoBusy} className="magnetic-btn w-full bg-accent text-white rounded-full py-3.5 font-bold shadow-lg shadow-accent/25 disabled:opacity-70">
           {status === 'sending' ? 'Sending…' : 'Get My Free Quote'}
         </button>
         {status === 'error' && (
@@ -599,6 +736,7 @@ export function Footer() {
             <li className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 shrink-0" />{BIZ.address}</li>
             <li className="flex items-start gap-2"><Clock className="h-4 w-4 mt-0.5 shrink-0" />Mon–Sun · 24 hours</li>
           </ul>
+          <SocialLinks className="mt-5" />
         </div>
       </div>
       <div className="border-t border-white/10">

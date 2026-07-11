@@ -1,6 +1,6 @@
-import { ArrowUpRight } from 'lucide-react'
-import { REVIEWS, BIZ } from '../data.js'
-import { PageShell, PageHero, Reveal, Stars, useSeo, LOCAL_BUSINESS_SCHEMA, REVIEW_SCHEMA } from '../shared.jsx'
+import { ArrowUpRight, CheckCircle2 } from 'lucide-react'
+import { REVIEWS, BIZ, TRUST_BADGES } from '../data.js'
+import { PageShell, PageHero, Reveal, Stars, GoogleLogo, ReviewCard, useSeo, LOCAL_BUSINESS_SCHEMA, REVIEW_SCHEMA } from '../shared.jsx'
 
 export default function Reviews() {
   useSeo({
@@ -18,20 +18,35 @@ export default function Reviews() {
         image="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=2000&q=80"
       />
       <section className="max-w-7xl mx-auto px-4 sm:px-8 py-16 sm:py-24">
+        <Reveal>
+          <div className="text-center mb-10">
+            <p className="font-display font-extrabold text-2xl tracking-tight">EXCELLENT</p>
+            <Stars n={5} className="h-6 w-6 mx-auto my-2" />
+            <p className="text-muted text-sm">Based on <strong className="text-ink">{BIZ.reviewCount} reviews</strong></p>
+            <div className="mt-2 flex justify-center"><GoogleLogo className="h-6 w-auto" /></div>
+          </div>
+        </Reveal>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
           {REVIEWS.map((r, i) => (
-            <Reveal key={r.name} delay={(i % 3) * 100}>
-              <figure className="bg-surface border border-divider rounded-4xl p-7 h-full flex flex-col lift-on-hover">
-                <div className="flex items-center justify-between">
-                  <Stars n={r.stars} />
-                  <svg viewBox="0 0 24 24" className="h-5 w-5 opacity-80"><path fill="#4285F4" d="M22.6 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h5.9a5 5 0 0 1-2.2 3.3v2.8h3.6c2.1-2 3.3-4.9 3.3-8.3z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.6-2.8c-1 .7-2.3 1.1-3.7 1.1-2.9 0-5.3-1.9-6.2-4.6H2.1v2.9A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.8 14a6.6 6.6 0 0 1 0-4.2V6.9H2.1a11 11 0 0 0 0 10z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3.1.6 4.2 1.7L19.4 4A11 11 0 0 0 2.1 6.9L5.8 9.8c.9-2.7 3.3-4.4 6.2-4.4z"/></svg>
-                </div>
-                <blockquote className="mt-4 text-[15px] leading-relaxed flex-1">"{r.text}"</blockquote>
-                <figcaption className="mt-5 text-sm font-semibold">{r.name} <span className="text-muted font-normal">· {r.area}</span></figcaption>
-              </figure>
+            <Reveal key={r.name} delay={(i % 3) * 100} className="h-full">
+              <ReviewCard review={r} index={i} className="lift-on-hover" />
             </Reveal>
           ))}
         </div>
+        <Reveal>
+          <div className="flex justify-center mb-10">
+            <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-3 py-1.5">
+              <CheckCircle2 className="h-3.5 w-3.5" /> Verified by Trustindex
+            </span>
+          </div>
+        </Reveal>
+        <Reveal delay={100}>
+          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6 mb-10">
+            {TRUST_BADGES.map((b) => (
+              <img key={b.alt} src={b.src} alt={b.alt} className="h-14 w-auto object-contain" loading="lazy" />
+            ))}
+          </div>
+        </Reveal>
         <Reveal>
           <p className="text-center text-muted text-sm">
             Had a great experience?{' '}
