@@ -307,8 +307,8 @@ export function ReviewCard({ review, index = 0, className = '' }) {
 export function Logo({ dark = false }) {
   const clipId = useId()
   return (
-    <Link to="/" className="flex items-center gap-2.5 shrink-0" aria-label={`${BIZ.name} — home`}>
-      <svg viewBox="0 0 64 100" className="h-9 w-6 shrink-0">
+    <Link to="/" className="flex items-center gap-3.5 shrink-0" aria-label={`${BIZ.name} — home`}>
+      <svg viewBox="0 0 64 100" className="h-[54px] w-9 shrink-0">
         <defs>
           <clipPath id={clipId}>
             <path d="M32 2C20 20 4 45 4 68a28 28 0 0 0 56 0C60 45 44 20 32 2Z" />
@@ -323,10 +323,10 @@ export function Logo({ dark = false }) {
         </g>
       </svg>
       <span className="leading-none">
-        <span className="block font-display font-extrabold text-lg tracking-tight text-[#FACC15]">
+        <span className="block font-display font-extrabold text-[27px] tracking-tight text-[#FACC15]">
           24/7
         </span>
-        <span className={`block font-display font-extrabold text-lg tracking-tight ${dark ? 'text-white' : 'text-ink'}`}>
+        <span className={`block font-display font-extrabold text-[27px] tracking-tight ${dark ? 'text-white' : 'text-ink'}`}>
           Emergency Plumbing
         </span>
       </span>
@@ -350,11 +350,14 @@ export function Navbar({ overlay = false }) {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 24)
+    // When overlaying a full-height hero, stay transparent for the whole hero
+    // section — only go solid once the user has scrolled past it.
+    const threshold = overlay ? window.innerHeight * 0.85 : 24
+    const fn = () => setScrolled(window.scrollY > threshold)
     fn()
     window.addEventListener('scroll', fn, { passive: true })
     return () => window.removeEventListener('scroll', fn)
-  }, [])
+  }, [overlay])
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
@@ -432,17 +435,6 @@ export function Navbar({ overlay = false }) {
               </li>
             ))}
           </ul>
-          <div className="mt-auto space-y-3">
-            <button onClick={() => { setOpen(false); openQuote() }} className="magnetic-btn w-full flex items-center justify-center gap-2 bg-primary text-white py-3.5 rounded-full font-bold">
-              Get Free Quote
-            </button>
-            <a href={`tel:${BIZ.phoneTel}`} className="magnetic-btn flex items-center justify-center gap-2 bg-accent text-white py-3.5 rounded-full font-bold">
-              <Phone className="h-5 w-5" /> Call {BIZ.phoneDisplay}
-            </a>
-            <a href={BIZ.whatsapp} className="magnetic-btn flex items-center justify-center gap-2 bg-[#25D366] text-white py-3.5 rounded-full font-bold">
-              <MessageCircle className="h-5 w-5" /> WhatsApp Us
-            </a>
-          </div>
         </div>
       </div>
     </>
