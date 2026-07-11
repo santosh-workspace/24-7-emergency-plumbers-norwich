@@ -304,11 +304,11 @@ export function ReviewCard({ review, index = 0, className = '' }) {
 }
 
 /* ---------------- Logo ---------------- */
-export function Logo({ dark = false }) {
+export function Logo({ dark = false, onClick }) {
   const clipId = useId()
   return (
-    <Link to="/" className="flex items-center gap-3.5 shrink-0" aria-label={`${BIZ.name} — home`}>
-      <svg viewBox="0 0 64 100" className="h-[54px] w-9 shrink-0">
+    <Link to="/" onClick={onClick} className="relative z-10 flex items-center gap-2 shrink-0" aria-label={`${BIZ.name} — home`}>
+      <svg viewBox="0 0 64 100" className="h-[27px] w-[18px] shrink-0">
         <defs>
           <clipPath id={clipId}>
             <path d="M32 2C20 20 4 45 4 68a28 28 0 0 0 56 0C60 45 44 20 32 2Z" />
@@ -323,10 +323,10 @@ export function Logo({ dark = false }) {
         </g>
       </svg>
       <span className="leading-none">
-        <span className="block font-display font-extrabold text-[27px] tracking-tight text-[#FACC15]">
+        <span className="block font-display font-extrabold text-[14px] tracking-tight text-[#FACC15]">
           24/7
         </span>
-        <span className={`block font-display font-extrabold text-[27px] tracking-tight ${dark ? 'text-white' : 'text-ink'}`}>
+        <span className={`block font-display font-extrabold text-[14px] tracking-tight ${dark ? 'text-white' : 'text-ink'}`}>
           Emergency Plumbing
         </span>
       </span>
@@ -378,7 +378,7 @@ export function Navbar({ overlay = false }) {
         </div>
         <header ref={headerRef} className={`${overlay ? '' : 'sticky top-0'} z-50 transition-all duration-300 ${scrolled ? 'glass shadow-lg shadow-primary/5' : 'bg-transparent'}`}>
           <nav className="max-w-7xl mx-auto flex items-center justify-between gap-4 px-4 sm:px-8 py-3">
-            <Logo dark={transparent} />
+            <Logo dark={transparent} onClick={() => setOpen(false)} />
             <ul className="hidden lg:flex items-center gap-1">
               {NAV.map((n) => (
                 <li key={n.to}>
