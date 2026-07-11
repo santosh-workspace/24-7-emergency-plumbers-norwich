@@ -38,7 +38,7 @@ export default function Areas() {
         title="Local to Norwich,"
         italic="all across Norfolk."
         sub="One team, one phone number, no subcontracting. If you're within our patch, an engineer is 30–60 minutes away at any hour."
-        image="https://images.unsplash.com/photo-1587839155839-1a02e4b1d165?auto=format&fit=crop&w=2000&q=80"
+        image="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=2000&q=80"
       />
       <section className="max-w-7xl mx-auto px-4 sm:px-8 py-16 sm:py-24">
         <Reveal>

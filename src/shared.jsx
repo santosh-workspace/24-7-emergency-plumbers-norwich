@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import {
   Phone, MessageCircle, Menu, X, Star, ShieldCheck, Clock, BadgeCheck,
@@ -207,26 +207,25 @@ export function Stars({ n = 5, className = 'h-4 w-4' }) {
 
 /* ---------------- Logo ---------------- */
 export function Logo({ dark = false }) {
+  const clipId = useId()
   return (
-    <Link to="/" className="flex items-center gap-2 shrink-0" aria-label={`${BIZ.name} — home`}>
-      <svg viewBox="0 0 24 28" className="h-8 w-7 shrink-0" fill="none">
-        <path
-          d="M12 1.6C7.8 7.3 4 13 4 17.6a8 8 0 0 0 16 0c0-4.6-3.8-10.3-8-15.9z"
-          fill="#1C93B0"
-          stroke={dark ? '#fff' : '#111111'}
-          strokeWidth="1.6"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M8 15.6c-.3 2.1.9 4.5 3.2 5.3"
-          stroke="#AEE9F5"
-          strokeWidth="1.4"
-          strokeLinecap="round"
-          opacity="0.75"
-        />
+    <Link to="/" className="flex items-center gap-2.5 shrink-0" aria-label={`${BIZ.name} — home`}>
+      <svg viewBox="0 0 64 100" className="h-9 w-6 shrink-0">
+        <defs>
+          <clipPath id={clipId}>
+            <path d="M32 2C20 20 4 45 4 68a28 28 0 0 0 56 0C60 45 44 20 32 2Z" />
+          </clipPath>
+        </defs>
+        <g clipPath={`url(#${clipId})`}>
+          <rect x="0" y="0" width="64" height="100" fill="#FACC15" />
+          <path
+            d="M0 58C10 55 20 52 30 53C40 55 50 61 64 67L64 100L0 100Z"
+            fill={dark ? '#ffffff' : '#1F2937'}
+          />
+        </g>
       </svg>
       <span className="leading-none">
-        <span className={`block font-display font-extrabold text-lg tracking-tight ${dark ? 'text-white' : 'text-ink'}`}>
+        <span className="block font-display font-extrabold text-lg tracking-tight text-[#FACC15]">
           24/7
         </span>
         <span className={`block font-display font-extrabold text-lg tracking-tight ${dark ? 'text-white' : 'text-ink'}`}>
@@ -249,7 +248,7 @@ const NAV = [
   { label: 'Contact', to: '/contact' },
 ]
 
-export function Navbar() {
+export function Navbar({ overlay = false }) {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   useEffect(() => {
@@ -262,49 +261,61 @@ export function Navbar() {
     document.body.style.overflow = open ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
   }, [open])
+  const transparent = overlay && !scrolled
   return (
     <>
       <QuoteModalHost />
       <WhatsAppButton />
-      {/* Emergency banner */}
-      <div className="relative z-50 bg-accent text-white text-center text-[13px] font-medium py-1.5 px-4">
-        <Clock className="inline h-3.5 w-3.5 -mt-0.5 mr-1.5" />
-        Plumbing emergency? We answer 24/7 —{' '}
-        <a href={`tel:${BIZ.phoneTel}`} className="font-bold underline underline-offset-2">{BIZ.phoneDisplay}</a>
+      <div className={overlay ? 'fixed inset-x-0 top-0 z-50' : ''}>
+        {/* Emergency banner */}
+        <div className="relative z-50 bg-accent text-white text-center text-[13px] font-medium py-1.5 px-4">
+          <Clock className="inline h-3.5 w-3.5 -mt-0.5 mr-1.5" />
+          Plumbing emergency? We answer 24/7 —{' '}
+          <a href={`tel:${BIZ.phoneTel}`} className="font-bold underline underline-offset-2">{BIZ.phoneDisplay}</a>
+        </div>
+        <header className={`${overlay ? '' : 'sticky top-0'} z-50 transition-all duration-300 ${scrolled ? 'glass shadow-lg shadow-primary/5' : 'bg-transparent'}`}>
+          <nav className="max-w-7xl mx-auto flex items-center justify-between gap-4 px-4 sm:px-8 py-3">
+            <Logo dark={transparent} />
+            <ul className="hidden lg:flex items-center gap-1">
+              {NAV.map((n) => (
+                <li key={n.to}>
+                  <NavLink
+                    to={n.to}
+                    className={({ isActive }) =>
+                      `px-3 py-2 rounded-full text-[14px] font-medium transition-colors ${isActive ? 'bg-primary text-white' : transparent ? 'text-white hover:bg-white/10' : 'text-ink hover:bg-primary/10'}`}
+                  >
+                    {n.label}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+            <div className="flex items-center gap-2">
+              <a
+                href={BIZ.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Chat with us on WhatsApp"
+                className="magnetic-btn hidden sm:grid place-items-center h-10 w-10 rounded-full bg-[#25D366] text-white shadow-lg shadow-black/10"
+              >
+                <WhatsAppIcon className="h-5 w-5" />
+              </a>
+              <a
+                href={`tel:${BIZ.phoneTel}`}
+                className="magnetic-btn ring-pulse hidden sm:inline-flex items-center gap-2 bg-accent text-white pl-4 pr-5 py-2.5 rounded-full font-semibold text-sm shadow-lg shadow-accent/25"
+              >
+                <Phone className="h-4 w-4" /> {BIZ.phoneDisplay}
+              </a>
+              <button
+                onClick={() => setOpen(!open)}
+                className={`lg:hidden grid place-items-center h-11 w-11 rounded-full border transition-colors ${transparent ? 'border-white/20 bg-white/10 text-white' : 'border-divider bg-surface text-ink'}`}
+                aria-label={open ? 'Close menu' : 'Open menu'}
+              >
+                {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </button>
+            </div>
+          </nav>
+        </header>
       </div>
-      <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'glass shadow-lg shadow-primary/5' : 'bg-transparent'}`}>
-        <nav className="max-w-7xl mx-auto flex items-center justify-between gap-4 px-4 sm:px-8 py-3">
-          <Logo />
-          <ul className="hidden lg:flex items-center gap-1">
-            {NAV.map((n) => (
-              <li key={n.to}>
-                <NavLink
-                  to={n.to}
-                  className={({ isActive }) =>
-                    `px-3 py-2 rounded-full text-[14px] font-medium transition-colors ${isActive ? 'bg-primary text-white' : 'text-ink hover:bg-primary/10'}`}
-                >
-                  {n.label}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-          <div className="flex items-center gap-2">
-            <a
-              href={`tel:${BIZ.phoneTel}`}
-              className="magnetic-btn ring-pulse hidden sm:inline-flex items-center gap-2 bg-accent text-white pl-4 pr-5 py-2.5 rounded-full font-semibold text-sm shadow-lg shadow-accent/25"
-            >
-              <Phone className="h-4 w-4" /> {BIZ.phoneDisplay}
-            </a>
-            <button
-              onClick={() => setOpen(!open)}
-              className="lg:hidden grid place-items-center h-11 w-11 rounded-full border border-divider bg-surface"
-              aria-label={open ? 'Close menu' : 'Open menu'}
-            >
-              {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </button>
-          </div>
-        </nav>
-      </header>
       {/* Mobile overlay */}
       <div className={`fixed inset-0 z-40 lg:hidden transition-all duration-300 ${open ? 'visible opacity-100' : 'invisible opacity-0'}`}>
         <div className="absolute inset-0 bg-deep/60 backdrop-blur-sm" onClick={() => setOpen(false)} />
@@ -340,6 +351,15 @@ export function Navbar() {
   )
 }
 
+/* ---------------- WhatsApp glyph (brand icon) ---------------- */
+export function WhatsAppIcon({ className = 'h-4 w-4' }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden="true">
+      <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.48 1.32 5L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.85 9.85 0 0 0 12.04 2zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.37c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.22-8.24 8.22zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.04-.38-1.99-1.22-.73-.66-1.23-1.46-1.37-1.71-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.06 0 1.22.89 2.39 1.01 2.56.12.17 1.75 2.68 4.25 3.75.59.26 1.06.41 1.42.52.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.19.21-.58.21-1.08.15-1.19-.06-.11-.23-.17-.48-.29z" />
+    </svg>
+  )
+}
+
 /* ---------------- Floating WhatsApp button (desktop; mobile uses the sticky bar) ---------------- */
 export function WhatsAppButton() {
   return (
@@ -351,9 +371,7 @@ export function WhatsAppButton() {
       className="hidden sm:grid fixed z-50 right-6 bottom-6 place-items-center h-14 w-14 rounded-full bg-[#25D366] text-white shadow-xl shadow-black/25 magnetic-btn"
     >
       <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-60" />
-      <svg viewBox="0 0 24 24" className="relative h-7 w-7" fill="currentColor" aria-hidden="true">
-        <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.48 1.32 5L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.85 9.85 0 0 0 12.04 2zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.37c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.22-8.24 8.22zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.04-.38-1.99-1.22-.73-.66-1.23-1.46-1.37-1.71-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.06 0 1.22.89 2.39 1.01 2.56.12.17 1.75 2.68 4.25 3.75.59.26 1.06.41 1.42.52.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.19.21-.58.21-1.08.15-1.19-.06-.11-.23-.17-.48-.29z" />
-      </svg>
+      <WhatsAppIcon className="relative h-7 w-7" />
     </a>
   )
 }

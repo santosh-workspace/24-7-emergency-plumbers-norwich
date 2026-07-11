@@ -32,12 +32,12 @@ function Hero() {
   return (
     <section ref={ref} className="relative min-h-[100dvh] overflow-hidden bg-deep">
       <img
-        src="https://images.unsplash.com/photo-1676210134188-4c05dda172bc?auto=format&fit=crop&w=2000&q=80"
-        alt="Professional emergency plumber at work in Norwich"
-        className="absolute inset-0 h-full w-full object-cover brightness-[0.45]"
+        src="/hero.jpg"
+        alt="Moody 3D-rendered luxury bathroom with a matte black freestanding tub"
+        className="absolute inset-0 h-full w-full object-cover brightness-[0.8]"
         loading="eager" fetchpriority="high"
       />
-      <div className="absolute inset-0 bg-gradient-to-br from-deep/90 via-deep/50 to-deep/80" />
+      <div className="absolute inset-0 bg-gradient-to-br from-deep/55 via-deep/15 to-deep/45" />
       <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-deep to-transparent" />
       {/* floating droplet particles */}
       <div className="absolute top-24 right-10 hidden lg:block" aria-hidden="true">
@@ -46,7 +46,7 @@ function Hero() {
             style={{ top: i * 34, right: i * 26, animationDelay: `${i * 0.9}s` }} />
         ))}
       </div>
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 pt-14 sm:pt-20 pb-16 min-h-[100dvh] grid lg:grid-cols-[1.15fr_0.85fr] gap-10 lg:gap-16 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 pt-32 sm:pt-28 pb-16 min-h-[100dvh] grid lg:grid-cols-[1.15fr_0.85fr] gap-10 lg:gap-16 items-center">
         <div>
           <p className="hero-meta inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.25em] text-white/70 mb-6 border border-white/15 rounded-full px-4 py-2 glass-dark">
             <span className="relative flex h-2 w-2">
@@ -136,15 +136,20 @@ function ServicesOverview() {
           const I = ICONS[s.icon] || Wrench
           return (
             <Reveal key={s.slug} delay={(i % 3) * 100} className="h-full">
-              <Link to={`/services/${s.slug}`} className="group flex flex-col h-full bg-surface p-7 hover:bg-primary transition-colors duration-300">
-                <span className="grid place-items-center h-12 w-12 rounded-2xl bg-primary/10 text-primary group-hover:bg-white/15 group-hover:text-white transition-colors mb-5">
-                  <I className="h-6 w-6" />
-                </span>
-                <h3 className="font-display font-bold text-lg group-hover:text-white transition-colors">{s.title}</h3>
-                <p className="text-muted text-sm leading-relaxed mt-2 flex-1 group-hover:text-white/75 transition-colors">{s.short}</p>
-                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary group-hover:text-white transition-colors">
-                  Learn more <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </span>
+              <Link to={`/services/${s.slug}`} className="group flex flex-col h-full bg-surface transition-colors duration-300">
+                <div className="relative h-40 overflow-hidden">
+                  <img src={s.image} alt={s.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <span className="absolute top-3 left-3 grid place-items-center h-10 w-10 rounded-xl bg-white/90 backdrop-blur text-primary">
+                    <I className="h-5 w-5" />
+                  </span>
+                </div>
+                <div className="flex flex-col flex-1 p-7 group-hover:bg-primary transition-colors duration-300">
+                  <h3 className="font-display font-bold text-lg group-hover:text-white transition-colors">{s.title}</h3>
+                  <p className="text-muted text-sm leading-relaxed mt-2 flex-1 group-hover:text-white/75 transition-colors">{s.short}</p>
+                  <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary group-hover:text-white transition-colors">
+                    Learn more <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </span>
+                </div>
               </Link>
             </Reveal>
           )
@@ -398,7 +403,7 @@ export default function App() {
   return (
     <div className="relative">
       <div className="noise-overlay" />
-      <Navbar />
+      <Navbar overlay />
       <main className="relative z-10">
         <Hero />
         <TrustBadges />

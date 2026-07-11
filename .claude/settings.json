@@ -3,7 +3,9 @@
     "allow": [
       "Bash(apt-get download *)",
       "Bash(pkill -f \"vite\")",
-      "Bash(python3 -)"
+      "Bash(python3 -)",
+      "Bash(which google-chrome *)",
+      "Read(//usr/bin/**)"
     ]
   }
 }
