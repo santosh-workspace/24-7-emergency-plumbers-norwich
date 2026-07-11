@@ -304,24 +304,29 @@ export function ReviewCard({ review, index = 0, className = '' }) {
 }
 
 /* ---------------- Logo ---------------- */
-export function Logo({ dark = false, onClick }) {
+export function Logo({ dark = false, badge = false, onClick }) {
   const clipId = useId()
+  const icon = (
+    <svg viewBox="0 0 64 100" className="h-[27px] w-[18px] shrink-0">
+      <defs>
+        <clipPath id={clipId}>
+          <path d="M32 2C20 20 4 45 4 68a28 28 0 0 0 56 0C60 45 44 20 32 2Z" />
+        </clipPath>
+      </defs>
+      <g clipPath={`url(#${clipId})`}>
+        <rect x="0" y="0" width="64" height="100" fill="#FACC15" />
+        <path
+          d="M0 58C10 55 20 52 30 53C40 55 50 61 64 67L64 100L0 100Z"
+          fill={dark ? '#ffffff' : '#1F2937'}
+        />
+      </g>
+    </svg>
+  )
   return (
-    <Link to="/" onClick={onClick} className="relative z-10 flex items-center gap-2 shrink-0" aria-label={`${BIZ.name} — home`}>
-      <svg viewBox="0 0 64 100" className="h-[27px] w-[18px] shrink-0">
-        <defs>
-          <clipPath id={clipId}>
-            <path d="M32 2C20 20 4 45 4 68a28 28 0 0 0 56 0C60 45 44 20 32 2Z" />
-          </clipPath>
-        </defs>
-        <g clipPath={`url(#${clipId})`}>
-          <rect x="0" y="0" width="64" height="100" fill="#FACC15" />
-          <path
-            d="M0 58C10 55 20 52 30 53C40 55 50 61 64 67L64 100L0 100Z"
-            fill={dark ? '#ffffff' : '#1F2937'}
-          />
-        </g>
-      </svg>
+    <Link to="/" onClick={onClick} className="relative z-10 flex items-center gap-2.5 shrink-0" aria-label={`${BIZ.name} — home`}>
+      {badge ? (
+        <span className={`grid place-items-center h-9 w-9 rounded-xl shrink-0 ${dark ? 'bg-white/15' : 'bg-primary/10'}`}>{icon}</span>
+      ) : icon}
       <span className="leading-none">
         <span className="block font-display font-extrabold text-[14px] tracking-tight text-[#FACC15]">
           24/7
@@ -349,6 +354,7 @@ const NAV = [
 export function Navbar({ overlay = false }) {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const [isDesktop, setIsDesktop] = useState(false)
   const headerRef = useRef(null)
   const [menuOffset, setMenuOffset] = useState(96)
   useEffect(() => {
@@ -364,7 +370,16 @@ export function Navbar({ overlay = false }) {
     document.body.style.overflow = open ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
   }, [open])
-  const transparent = overlay && !scrolled
+  useEffect(() => {
+    // The see-through hero navbar is a desktop-only treatment — on mobile/tablet
+    // the nav is always a solid floating pill, regardless of scroll position.
+    const mq = window.matchMedia('(min-width: 1024px)')
+    const update = () => setIsDesktop(mq.matches)
+    update()
+    mq.addEventListener('change', update)
+    return () => mq.removeEventListener('change', update)
+  }, [])
+  const transparent = overlay && !scrolled && isDesktop
   return (
     <>
       <QuoteModalHost />
@@ -376,9 +391,12 @@ export function Navbar({ overlay = false }) {
           Plumbing emergency? We answer 24/7 —{' '}
           <a href={`tel:${BIZ.phoneTel}`} className="font-bold underline underline-offset-2">{BIZ.phoneDisplay}</a>
         </div>
-        <header ref={headerRef} className={`${overlay ? '' : 'sticky top-0'} z-50 transition-all duration-300 ${transparent ? 'bg-transparent' : 'glass shadow-lg shadow-primary/5'}`}>
+        <header
+          ref={headerRef}
+          className={`${overlay ? '' : 'sticky top-0'} z-50 transition-all duration-300 max-lg:mx-3 max-lg:mt-3 max-lg:rounded-full max-lg:overflow-hidden lg:mx-0 lg:mt-0 ${transparent ? 'bg-transparent' : 'glass shadow-lg shadow-primary/5'}`}
+        >
           <nav className="max-w-7xl mx-auto flex items-center justify-between gap-4 px-4 sm:px-8 py-3">
-            <Logo dark={transparent} onClick={() => setOpen(false)} />
+            <Logo dark={transparent} badge onClick={() => setOpen(false)} />
             <ul className="hidden lg:flex items-center gap-1">
               {NAV.map((n) => (
                 <li key={n.to}>
