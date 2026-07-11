@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(apt-get download *)",
+      "Bash(pkill -f \"vite\")",
+      "Bash(python3 -)"
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 import { MapPin, Clock, Phone } from 'lucide-react'
 import { BIZ, AREAS } from '../data.js'
-import { PageShell, PageHero, Reveal, useSeo, LOCAL_BUSINESS_SCHEMA } from '../shared.jsx'
+import { PageShell, PageHero, Reveal, CoverageMap, useSeo, LOCAL_BUSINESS_SCHEMA } from '../shared.jsx'
 
 const ZONES = [
   {
@@ -41,6 +41,19 @@ export default function Areas() {
         image="https://images.unsplash.com/photo-1587839155839-1a02e4b1d165?auto=format&fit=crop&w=2000&q=80"
       />
       <section className="max-w-7xl mx-auto px-4 sm:px-8 py-16 sm:py-24">
+        <Reveal>
+          <div className="mb-4 flex items-center justify-between gap-4">
+            <h2 className="font-display font-extrabold text-xl sm:text-2xl tracking-tight">Our coverage map</h2>
+            <span className="inline-flex items-center gap-1.5 text-[12px] font-bold text-primary bg-primary/10 rounded-full px-3 py-1.5">
+              <MapPin className="h-3.5 w-3.5" /> {AREAS.length} towns &amp; villages
+            </span>
+          </div>
+        </Reveal>
+        <Reveal delay={80}>
+          <div className="mb-12 rounded-4xl border border-divider overflow-hidden shadow-sm">
+            <CoverageMap className="h-[380px] sm:h-[480px] w-full" />
+          </div>
+        </Reveal>
         <div className="grid md:grid-cols-2 gap-6">
           {ZONES.map((z, i) => (
             <Reveal key={z.name} delay={(i % 2) * 100}>

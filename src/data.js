@@ -1,3 +1,6 @@
+// Web3Forms access key — get one free at https://web3forms.com (tied to santosh10392@gmail.com)
+export const WEB3FORMS_ACCESS_KEY = 'YOUR_WEB3FORMS_ACCESS_KEY'
+
 // ------- Business constants (single source of truth for NAP) -------
 export const BIZ = {
   name: '247 Emergency Plumber Norwich',
@@ -150,6 +153,34 @@ export const AREAS = [
   'Hellesdon', 'Thorpe St Andrew', 'Drayton', 'Taverham', 'Thorpe Marriott', 'Poringland',
   'Brundall', 'Blofield', 'Acle', 'Wroxham', 'Lakenham', 'Easton',
   'Spixworth', 'Rackheath', 'Mulbarton', 'Swardeston', 'Long Stratton', 'Reepham',
+]
+
+// ------- Coordinates for the coverage map (approximate town centres) -------
+export const AREA_COORDS = [
+  { name: 'Norwich', lat: 52.6309, lng: 1.2974 },
+  { name: 'Great Yarmouth', lat: 52.6083, lng: 1.7305 },
+  { name: 'Wymondham', lat: 52.5706, lng: 1.1147 },
+  { name: 'Hethersett', lat: 52.5883, lng: 1.1817 },
+  { name: 'Cringleford', lat: 52.6089, lng: 1.2258 },
+  { name: 'Eaton', lat: 52.6106, lng: 1.2687 },
+  { name: 'Hellesdon', lat: 52.6461, lng: 1.2551 },
+  { name: 'Thorpe St Andrew', lat: 52.6335, lng: 1.3444 },
+  { name: 'Drayton', lat: 52.6797, lng: 1.2308 },
+  { name: 'Taverham', lat: 52.6712, lng: 1.2058 },
+  { name: 'Thorpe Marriott', lat: 52.6825, lng: 1.2150 },
+  { name: 'Poringland', lat: 52.5817, lng: 1.3489 },
+  { name: 'Brundall', lat: 52.6103, lng: 1.4335 },
+  { name: 'Blofield', lat: 52.6335, lng: 1.4653 },
+  { name: 'Acle', lat: 52.6394, lng: 1.5464 },
+  { name: 'Wroxham', lat: 52.7147, lng: 1.4056 },
+  { name: 'Lakenham', lat: 52.6172, lng: 1.2989 },
+  { name: 'Easton', lat: 52.6489, lng: 1.1489 },
+  { name: 'Spixworth', lat: 52.6975, lng: 1.2856 },
+  { name: 'Rackheath', lat: 52.6725, lng: 1.3308 },
+  { name: 'Mulbarton', lat: 52.5544, lng: 1.2278 },
+  { name: 'Swardeston', lat: 52.5794, lng: 1.2394 },
+  { name: 'Long Stratton', lat: 52.4975, lng: 1.2189 },
+  { name: 'Reepham', lat: 52.7625, lng: 1.1178 },
 ]
 
 // ------- Reviews (representative of the 4.9-star Google profile) -------

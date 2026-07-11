@@ -4,7 +4,17 @@ import {
   Phone, MessageCircle, Menu, X, Star, ShieldCheck, Clock, BadgeCheck,
   MapPin, Mail, ArrowUpRight, CheckCircle2,
 } from 'lucide-react'
-import { BIZ, SERVICES, FAQS, REVIEWS } from './data.js'
+import L from 'leaflet'
+import 'leaflet/dist/leaflet.css'
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png'
+import markerIcon from 'leaflet/dist/images/marker-icon.png'
+import markerShadow from 'leaflet/dist/images/marker-shadow.png'
+import { BIZ, SERVICES, FAQS, REVIEWS, AREA_COORDS, WEB3FORMS_ACCESS_KEY } from './data.js'
+
+L.Marker.prototype.options.icon = L.icon({
+  iconUrl: markerIcon, iconRetinaUrl: markerIcon2x, shadowUrl: markerShadow,
+  iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41],
+})
 
 /* ---------------- SEO helper: title, description, JSON-LD ---------------- */
 export function useSeo({ title, description, schema }) {
@@ -198,22 +208,29 @@ export function Stars({ n = 5, className = 'h-4 w-4' }) {
 /* ---------------- Logo ---------------- */
 export function Logo({ dark = false }) {
   return (
-    <Link to="/" className="flex items-center gap-2.5 shrink-0" aria-label={`${BIZ.name} — home`}>
-      <span className="relative grid place-items-center h-9 w-9 rounded-xl bg-primary-dark">
-        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none">
-          <path d="M12 3c-3 4-5 6.8-5 9.5a5 5 0 0 0 10 0C17 9.8 15 7 12 3z" fill="#fff" />
-          <path d="M12 3c-3 4-5 6.8-5 9.5a5 5 0 0 0 5 5z" fill="#E2323D" />
-        </svg>
-        <span className="absolute -top-1 -right-1 h-3.5 w-3.5 rounded-full bg-accent grid place-items-center">
-          <span className="text-[7px] font-bold text-white leading-none">24</span>
+    <Link to="/" className="flex items-center gap-2 shrink-0" aria-label={`${BIZ.name} — home`}>
+      <svg viewBox="0 0 24 28" className="h-8 w-7 shrink-0" fill="none">
+        <path
+          d="M12 1.6C7.8 7.3 4 13 4 17.6a8 8 0 0 0 16 0c0-4.6-3.8-10.3-8-15.9z"
+          fill="#1C93B0"
+          stroke={dark ? '#fff' : '#111111'}
+          strokeWidth="1.6"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M8 15.6c-.3 2.1.9 4.5 3.2 5.3"
+          stroke="#AEE9F5"
+          strokeWidth="1.4"
+          strokeLinecap="round"
+          opacity="0.75"
+        />
+      </svg>
+      <span className="leading-none">
+        <span className={`block font-display font-extrabold text-lg tracking-tight ${dark ? 'text-white' : 'text-ink'}`}>
+          24/7
         </span>
-      </span>
-      <span className="leading-tight">
-        <span className={`block font-display font-800 font-extrabold text-[15px] tracking-tight ${dark ? 'text-white' : 'text-ink'}`}>
-          247 Emergency Plumber
-        </span>
-        <span className={`block font-mono text-[10px] uppercase tracking-[0.22em] ${dark ? 'text-white/60' : 'text-muted'}`}>
-          Norwich · 24/7
+        <span className={`block font-display font-extrabold text-lg tracking-tight ${dark ? 'text-white' : 'text-ink'}`}>
+          Emergency Plumbing
         </span>
       </span>
     </Link>
@@ -248,6 +265,7 @@ export function Navbar() {
   return (
     <>
       <QuoteModalHost />
+      <WhatsAppButton />
       {/* Emergency banner */}
       <div className="relative z-50 bg-accent text-white text-center text-[13px] font-medium py-1.5 px-4">
         <Clock className="inline h-3.5 w-3.5 -mt-0.5 mr-1.5" />
@@ -322,6 +340,48 @@ export function Navbar() {
   )
 }
 
+/* ---------------- Floating WhatsApp button (desktop; mobile uses the sticky bar) ---------------- */
+export function WhatsAppButton() {
+  return (
+    <a
+      href={BIZ.whatsapp}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Chat with ${BIZ.name} on WhatsApp`}
+      className="hidden sm:grid fixed z-50 right-6 bottom-6 place-items-center h-14 w-14 rounded-full bg-[#25D366] text-white shadow-xl shadow-black/25 magnetic-btn"
+    >
+      <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-60" />
+      <svg viewBox="0 0 24 24" className="relative h-7 w-7" fill="currentColor" aria-hidden="true">
+        <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.48 1.32 5L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.85 9.85 0 0 0 12.04 2zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.37c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.22-8.24 8.22zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.04-.38-1.99-1.22-.73-.66-1.23-1.46-1.37-1.71-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.06 0 1.22.89 2.39 1.01 2.56.12.17 1.75 2.68 4.25 3.75.59.26 1.06.41 1.42.52.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.19.21-.58.21-1.08.15-1.19-.06-.11-.23-.17-.48-.29z" />
+      </svg>
+    </a>
+  )
+}
+
+/* ---------------- Coverage map (real map, pinned areas) ---------------- */
+export function CoverageMap({ className = '', areas = AREA_COORDS }) {
+  const elRef = useRef(null)
+  const mapRef = useRef(null)
+  useEffect(() => {
+    if (!elRef.current || mapRef.current) return
+    const map = L.map(elRef.current, { scrollWheelZoom: false }).setView([BIZ.geo.lat, BIZ.geo.lng], 10)
+    mapRef.current = map
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
+      maxZoom: 18,
+    }).addTo(map)
+    L.circleMarker([BIZ.geo.lat, BIZ.geo.lng], {
+      radius: 9, color: '#fff', weight: 3, fillColor: '#E2323D', fillOpacity: 1,
+    }).addTo(map).bindPopup(`<strong>${BIZ.name}</strong><br/>${BIZ.address}`)
+    areas.forEach((a) => {
+      if (a.name === 'Norwich') return
+      L.marker([a.lat, a.lng]).addTo(map).bindPopup(`<strong>${a.name}</strong><br/>Covered 24/7`)
+    })
+    return () => { map.remove(); mapRef.current = null }
+  }, [areas])
+  return <div ref={elRef} className={`z-0 ${className}`} />
+}
+
 /* ---------------- Sticky mobile CTA bar ---------------- */
 export function StickyCtaBar() {
   return (
@@ -358,11 +418,22 @@ export function TrustStrip({ dark = false }) {
 /* ---------------- Quote form (reused hero + contact + CTA) ---------------- */
 export function QuoteForm({ compact = false, title = 'Request a free callback' }) {
   const [status, setStatus] = useState('idle')
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault()
     setStatus('sending')
-    window.gtag && window.gtag('event', 'quote_form_submit', { event_category: 'lead' })
-    setTimeout(() => setStatus('sent'), 1200)
+    const formData = new FormData(e.target)
+    formData.append('access_key', WEB3FORMS_ACCESS_KEY)
+    formData.append('subject', `New quote request from ${BIZ.name} website`)
+    formData.append('from_name', BIZ.name)
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData })
+      const data = await res.json()
+      if (!data.success) throw new Error(data.message || 'Submission failed')
+      window.gtag && window.gtag('event', 'quote_form_submit', { event_category: 'lead' })
+      setStatus('sent')
+    } catch {
+      setStatus('error')
+    }
   }
   if (status === 'sent') {
     return (
@@ -378,6 +449,7 @@ export function QuoteForm({ compact = false, title = 'Request a free callback' }
       <h3 className="font-display font-bold text-lg mb-1">{title}</h3>
       <p className="text-muted text-[13px] mb-5">Free, no-obligation quote · No call-out fee · Usually answered within the hour</p>
       <div className="grid gap-3">
+        <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} tabIndex="-1" autoComplete="off" />
         <div className={compact ? 'grid gap-3' : 'grid sm:grid-cols-2 gap-3'}>
           <input required name="name" placeholder="Your name" className="w-full rounded-2xl border border-divider bg-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40" />
           <input required name="phone" type="tel" placeholder="Phone number" className="w-full rounded-2xl border border-divider bg-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40" />
@@ -395,6 +467,9 @@ export function QuoteForm({ compact = false, title = 'Request a free callback' }
         <button type="submit" disabled={status === 'sending'} className="magnetic-btn w-full bg-accent text-white rounded-full py-3.5 font-bold shadow-lg shadow-accent/25 disabled:opacity-70">
           {status === 'sending' ? 'Sending…' : 'Get My Free Quote'}
         </button>
+        {status === 'error' && (
+          <p className="text-[12px] text-red-600 text-center">Something went wrong sending your request — please call {BIZ.phoneDisplay} instead.</p>
+        )}
         <p className="text-[11px] text-muted text-center">
           <ShieldCheck className="inline h-3.5 w-3.5 -mt-0.5 mr-1 text-primary" />
           Transparent pricing · Satisfaction guaranteed · Your details are never shared

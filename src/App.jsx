@@ -10,7 +10,7 @@ import {
 import { BIZ, SERVICES, AREAS, REVIEWS, FAQS, GALLERY } from './data.js'
 import {
   Navbar, Footer, StickyCtaBar, QuoteForm, TrustStrip, FinalCta, Reveal, openQuote,
-  CountUp, WaterDrops, Stars, FaqList, useSeo, LOCAL_BUSINESS_SCHEMA,
+  CountUp, WaterDrops, Stars, FaqList, CoverageMap, useSeo, LOCAL_BUSINESS_SCHEMA,
   faqSchema, REVIEW_SCHEMA,
 } from './shared.jsx'
 
@@ -249,15 +249,22 @@ function AreasSection() {
             </Link>
           </div>
         </Reveal>
-        <Reveal delay={100}>
-          <div className="flex flex-wrap gap-2.5">
-            {AREAS.map((a) => (
-              <span key={a} className="lift-on-hover inline-flex items-center gap-1.5 rounded-full border border-divider bg-background px-4 py-2 text-sm font-medium">
-                <MapPin className="h-3.5 w-3.5 text-accent" /> {a}
-              </span>
-            ))}
-          </div>
-        </Reveal>
+        <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-8 items-start">
+          <Reveal delay={100}>
+            <div className="flex flex-wrap gap-2.5">
+              {AREAS.map((a) => (
+                <span key={a} className="lift-on-hover inline-flex items-center gap-1.5 rounded-full border border-divider bg-background px-4 py-2 text-sm font-medium">
+                  <MapPin className="h-3.5 w-3.5 text-accent" /> {a}
+                </span>
+              ))}
+            </div>
+          </Reveal>
+          <Reveal delay={150}>
+            <div className="rounded-4xl border border-divider overflow-hidden shadow-sm">
+              <CoverageMap className="h-[340px] sm:h-[400px] w-full" />
+            </div>
+          </Reveal>
+        </div>
       </div>
     </section>
   )
