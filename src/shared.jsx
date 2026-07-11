@@ -376,7 +376,7 @@ export function Navbar({ overlay = false }) {
           Plumbing emergency? We answer 24/7 —{' '}
           <a href={`tel:${BIZ.phoneTel}`} className="font-bold underline underline-offset-2">{BIZ.phoneDisplay}</a>
         </div>
-        <header ref={headerRef} className={`${overlay ? '' : 'sticky top-0'} z-50 transition-all duration-300 ${scrolled ? 'glass shadow-lg shadow-primary/5' : 'bg-transparent'}`}>
+        <header ref={headerRef} className={`${overlay ? '' : 'sticky top-0'} z-50 transition-all duration-300 ${transparent ? 'bg-transparent' : 'glass shadow-lg shadow-primary/5'}`}>
           <nav className="max-w-7xl mx-auto flex items-center justify-between gap-4 px-4 sm:px-8 py-3">
             <Logo dark={transparent} onClick={() => setOpen(false)} />
             <ul className="hidden lg:flex items-center gap-1">

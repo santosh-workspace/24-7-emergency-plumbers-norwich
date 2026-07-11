@@ -65,7 +65,7 @@ function Hero() {
             with <strong className="text-white">no call-out fees</strong> and transparent pricing agreed before we start.
           </p>
           <div className="hero-cta mt-8 flex flex-wrap gap-3">
-            <a href={`tel:${BIZ.phoneTel}`} className="magnetic-btn ring-pulse inline-flex items-center gap-2.5 bg-accent text-white px-7 py-4 rounded-full font-bold text-lg shadow-xl shadow-accent/30">
+            <a href={`tel:${BIZ.phoneTel}`} className="magnetic-btn ring-pulse hidden sm:inline-flex items-center gap-2.5 bg-accent text-white px-7 py-4 rounded-full font-bold text-lg shadow-xl shadow-accent/30">
               <Phone className="h-5 w-5" /> Call Now — {BIZ.phoneDisplay}
             </a>
             <button onClick={openQuote} className="magnetic-btn inline-flex items-center gap-2 glass-dark text-white px-7 py-4 rounded-full font-bold text-lg border border-white/15">
