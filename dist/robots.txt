@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.emergencyplumbersnorwich.co.uk/sitemap.xml
